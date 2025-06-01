@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision & Ausgangslage - Simply.ch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="300" cy="700" r="120" fill="url(%23a)"/><circle cx="700" cy="800" r="80" fill="url(%23a)"/></svg>') no-repeat center center;
+            background-size: cover;
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: slideInUp 1s ease-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 2rem;
+            animation: slideInUp 1s ease-out 0.2s both;
+            opacity: 0.9;
+        }
+
+        .hero .tagline {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            animation: slideInUp 1s ease-out 0.4s both;
+            opacity: 0.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .trend-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .trend-card:hover::before {
+            left: 100%;
+        }
+
+        .trend-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .trend-card h3 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .trend-card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .stat {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 0.2rem;
+            font-size: 0.9rem;
+        }
+
+        .challenges-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .challenge-item {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 142, 142, 0.1));
+            border-left: 4px solid #ff6b6b;
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .challenge-item:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 142, 142, 0.2));
+            transform: translateX(10px);
+        }
+
+        .challenge-item h4 {
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .challenge-item p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+        }
+
+        .potential-section {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1));
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .potential-section h3 {
+            color: #4caf50;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .potential-section p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .vision-future {
+            background: linear-gradient(135deg, rgba(63, 81, 181, 0.1), rgba(103, 58, 183, 0.1));
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(63, 81, 181, 0.3);
+            text-align: center;
+        }
+
+        .vision-future h3 {
+            color: #3f51b5;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .vision-future p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            font-size: 1.2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 25px;
+            margin: 3rem 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(45deg, #ff5252, #ff6b6b);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .trend-card, .challenge-item {
+                padding: 1.5rem;
+            }
+            
+            .potential-section, .vision-future {
+                padding: 2rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Vision & Ausgangslage</h1>
+                <div class="subtitle">Die digitale Transformation von Simply.ch</div>
+                <div class="tagline">
+                    Wie KI und Automatisierung die Zukunft der Versicherungsberatung revolutionieren werden
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">Globale Markttrends</h2>
+            <div class="trends-grid">
+                <div class="trend-card fade-in">
+                    <h3>Steigende Werbekosten</h3>
+                    <p>Die Kundengewinnung über klassische Online-Kanäle wird immer teurer und unzuverlässiger. 
+                    <span class="stat">CPC +10%</span> und <span class="stat">CPL +25%</span> in vielen Branchen bei gleichzeitig sinkender Leadqualität.</p>
+                </div>
+                <div class="trend-card fade-in">
+                    <h3>Werbelastige Suchergebnisse</h3>
+                    <p>Suchergebnisse werden immer werbelastiger, was zu geringerer Conversion-Wahrscheinlichkeit führt. 
+                    Organische Reichweite sinkt kontinuierlich.</p>
+                </div>
+                <div class="trend-card fade-in">
+                    <h3>Auswirkungen für Simply.ch</h3>
+                    <p>Sinkende Leadqualität bei Google-Anzeigen und steigende Werbebudgets ohne klar höhere Abschlüsse. 
+                    Der ROI verschlechtert sich kontinuierlich.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">Aktuelle Herausforderungen</h2>
+            <div class="challenges-container">
+                <div class="challenge-item fade-in">
+                    <h4>Google & Marketing</h4>
+                    <p>Stetig steigende Klickkosten und weniger organische Reichweite führen zu höheren Ausgaben bei fallender Effizienz.</p>
+                </div>
+                <div class="challenge-item fade-in">
+                    <h4>Wettbewerbsdruck</h4>
+                    <p>Innovative Newcomer und digitale Plattformen setzen traditionelle Anbieter unter Zugzwang. Kunden erwarten smarte Services.</p>
+                </div>
+                <div class="challenge-item fade-in">
+                    <h4>Klumpenrisiko</h4>
+                    <p>Simplys Abhängigkeit von einer Lead-Quelle, die de facto von einer Person abhängt, ist existenzgefährdend.</p>
+                </div>
+                <div class="challenge-item fade-in">
+                    <h4>Saisonale Schwankungen</h4>
+                    <p>Starke Fokussierung auf Krankenkassen führt zu erheblichen Umsatzschwankungen und hohem Lead-Bedarf.</p>
+                </div>
+                <div class="challenge-item fade-in">
+                    <h4>Fehlender Customer Lifetime Value</h4>
+                    <p>Erneuerungen und Folgeabschlüsse werden nicht aktiv betrieben - ein offenes Tor für Mitbewerber.</p>
+                </div>
+                <div class="challenge-item fade-in">
+                    <h4>Ineffiziente Prozesse</h4>
+                    <p>Manuelle Callcenter-Prozesse binden 50% der Arbeitszeit. <span class="stat">Erreichbarkeit nur 25%</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="potential-section fade-in">
+                <h3>🚀 Potenzial von KI & Automatisierung</h3>
+                <p>
+                    Künstliche Intelligenz bietet die Lösung für diese Herausforderungen. Intelligente Systeme können repetitive Aufgaben übernehmen, 
+                    Daten blitzschnell analysieren und die Kundenansprache präziser gestalten. <strong>91% der Unternehmen</strong> sehen ihr 
+                    KI-Ökosystem noch auf niedrigem Reifegrad - eine riesige Chance für Pioniere wie Simply.ch.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="vision-future fade-in">
+                <h3>🎯 Zukunftsvision Simply.ch</h3>
+                <p>
+                    In wenigen Jahren könnte Simply.ch als <strong>Innovationsführer</strong> wahrgenommen werden: 
+                    Eine Versicherungsplattform, die durch intelligente Algorithmen Kundenbedürfnisse punktgenau erkennt, 
+                    automatisierte Lead-Generierung betreibt und Beratungsprozesse teilweise robotergesteuert erledigt.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="cta-section fade-in">
+                <h3 style="color: white; margin-bottom: 2rem; font-size: 2rem;">Bereit für die Transformation?</h3>
+                <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem; font-size: 1.1rem;">
+                    Lassen Sie uns gemeinsam die Zukunft von Simply.ch gestalten
+                </p>
+                <a href="#contact" class="cta-button">Zusammenarbeit starten</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add parallax effect to hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
